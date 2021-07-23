@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "665242680926",
+    "project_id": "rantsuku-app",
+    "storage_bucket": "rantsuku-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665242680926:android:0b221413c1d5c9a20dbecf",
+        "android_client_info": {
+          "package_name": "net.keishiro.rantsuku_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "665242680926-g7iqmolhdu334sh1jjtqmid7gbvu0mua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACKbfQTky8WEIstLN_C7pF3hPL2PwSbb0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "665242680926-g7iqmolhdu334sh1jjtqmid7gbvu0mua.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "665242680926-durnf7ep5q32l66hpclq3g38d9s45gcn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "net.keishiro.rantsukuApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
