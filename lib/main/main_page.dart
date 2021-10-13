@@ -26,25 +26,23 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<MainModel>(
-      create: (_) => MainModel()..getRankings(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: TextField(
-            decoration: InputDecoration(
-              hintText: 'キーワード検索',
+      create: (_) => MainModel()..fetchRankings(),
+      child: Consumer<MainModel>(builder: (context, model, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: TextField(
+              onChanged: (text) {
+                model.text = text;
+                model.search();
+              },
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                hintText: 'キーワード検索',
+              ),
             ),
           ),
-          actions: <Widget>[
-            ElevatedButton(
-              child: Icon(Icons.search),
-              onPressed: () {},
-            )
-          ],
-        ),
-        body: Consumer<MainModel>(builder: (context, model, child) {
-          final rankings = model.rankings;
-          return Column(
-            children: [
+          body: Column(
+            children: <Widget>[
               Center(
                 child: DropdownButton<String>(
                   value: model.dropdownValue,
@@ -63,7 +61,7 @@ class MainPage extends StatelessWidget {
               ),
               Expanded(
                 child: ListView(
-                  children: rankings
+                  children: model.rankings
                       .map(
                         (ranking) => ListTile(
                           title: Text(ranking.title),
@@ -71,8 +69,7 @@ class MainPage extends StatelessWidget {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ContentPage(ranking.title,
-                                    ranking.optionOne, ranking.optionTwo),
+                                builder: (context) => ContentPage(ranking),
                               ),
                             );
                           },
@@ -82,21 +79,21 @@ class MainPage extends StatelessWidget {
                 ),
               ),
             ],
-          );
-        }),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CreatePage(),
-                fullscreenDialog: true,
-              ),
-            );
-          },
-          child: Icon(Icons.add),
-        ),
-      ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CreatePage(),
+                  fullscreenDialog: true,
+                ),
+              );
+            },
+            child: Icon(Icons.add),
+          ),
+        );
+      }),
     );
   }
 }

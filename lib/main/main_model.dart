@@ -3,6 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:rantsuku_app/ranking.dart';
 
 class MainModel extends ChangeNotifier {
+  String text = '';
+
+  List<String> searchList = [];
+
+  List<String> searchResultList = [];
+
+  void search() {
+    if (this.text.isNotEmpty) {
+      searchResultList.clear();
+      this.searchList.forEach(
+        (element) {
+          if (element.contains(this.text)) {
+            searchResultList.add(element);
+          }
+        },
+      );
+      notifyListeners();
+    }
+  }
+
   List<String> _items = [
     '人気順',
     '新着順',
@@ -21,10 +41,10 @@ class MainModel extends ChangeNotifier {
 
   List<Ranking> rankings = [];
 
-  void getRankings() {
-    final snapshots =
+  void fetchRankings() {
+    final snapshot =
         FirebaseFirestore.instance.collection('rankings').snapshots();
-    snapshots.listen((snapshot) {
+    snapshot.listen((snapshot) {
       final docs = snapshot.docs;
       final rankings = docs.map((doc) => Ranking(doc)).toList();
       rankings.sort((a, b) => b.createdAt.compareTo(a.createdAt));

@@ -12,39 +12,51 @@ class CreatePage extends StatelessWidget {
           title: Text('ランキング作成'),
         ),
         body: Consumer<CreateModel>(builder: (context, model, child) {
-          return Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              children: [
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: 'タイトル',
-                  ),
-                  onChanged: (text) {
-                    model.rankingTitle = text;
-                  },
+          return ListView(
+            children: <Widget>[
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'タイトル',
                 ),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: '1つ目の選択肢',
-                  ),
-                  onChanged: (text) {
-                    model.rankingOptionOne = text;
-                  },
+                onChanged: (text) {
+                  model.rankingTitle = text;
+                },
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: '選択肢1',
                 ),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: '2つ目の選択肢',
+                onChanged: (text) {
+                  model.rankingOption1 = text;
+                },
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: '選択肢2',
+                      ),
+                      onChanged: (text) {
+                        model.rankingOption2 = text;
+                      },
+                    ),
                   ),
-                  onChanged: (text) {
-                    model.rankingOptionTwo = text;
-                  },
-                ),
-                ElevatedButton(
+                  ElevatedButton(
+                    child: Icon(Icons.add),
+                    onPressed: () async {
+                      await model.getOptions();
+                    },
+                  ),
+                ],
+              ),
+              ...model.newOptions,
+              Center(
+                child: ElevatedButton(
                   child: Text('保存して作成'),
                   onPressed: () async {
                     try {
-                      await model.add();
+                      await model.addRanking();
                       await showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -82,8 +94,8 @@ class CreatePage extends StatelessWidget {
                     }
                   },
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         }),
       ),
